@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {test} from 'node:test';
+import {podeVerNota,podeAlterarNota,podePublicarAula,podeAssistirAula} from './permissoes.mjs';
+const turma={id:'turma-1',professorId:'prof-1'};
+const nota={turmaId:'turma-1',alunoId:'aluno-1'};
+const matriculas=[{turmaId:'turma-1',alunoId:'aluno-1'}];
+const vinculos=[{responsavelId:'resp-1',alunoId:'aluno-1',confirmado:true}];
+const ver=(usuario, n=nota, v=vinculos)=>podeVerNota({usuario,nota:n,turma,matriculas,vinculos:v});
+test('aluno vê apenas a própria nota',()=>{assert.equal(ver({id:'aluno-1',papel:'aluno'}),true);assert.equal(ver({id:'aluno-2',papel:'aluno'}),false)});
+test('professor de outra turma não vê nota',()=>{assert.equal(ver({id:'prof-1',papel:'professor'}),true);assert.equal(ver({id:'prof-2',papel:'professor'}),false)});
+test('responsável precisa de vínculo confirmado',()=>{assert.equal(ver({id:'resp-1',papel:'responsavel'}),true);assert.equal(ver({id:'resp-2',papel:'responsavel'}),false);assert.equal(ver({id:'resp-1',papel:'responsavel'},nota,[{...vinculos[0],confirmado:false}]),false)});
+test('somente professor da turma altera nota de matriculado',()=>{const args={turma,nota,matriculas};assert.equal(podeAlterarNota({...args,usuario:{id:'prof-1',papel:'professor'}}),true);assert.equal(podeAlterarNota({...args,usuario:{id:'prof-2',papel:'professor'}}),false);assert.equal(podeAlterarNota({...args,usuario:{id:'aluno-1',papel:'aluno'}}),false)});
+test('somente professor da turma publica aula',()=>{assert.equal(podePublicarAula({usuario:{id:'prof-1',papel:'professor'},turma}),true);assert.equal(podePublicarAula({usuario:{id:'prof-2',papel:'professor'},turma}),false)});
+test('somente matriculado ou professor entra na aula',()=>{assert.equal(podeAssistirAula({usuario:{id:'aluno-1',papel:'aluno'},turma,matriculas}),true);assert.equal(podeAssistirAula({usuario:{id:'aluno-2',papel:'aluno'},turma,matriculas}),false)});
+test('sem usuário, acesso negado',()=>{assert.equal(ver(null),false);assert.equal(podePublicarAula({usuario:null,turma}),false)});

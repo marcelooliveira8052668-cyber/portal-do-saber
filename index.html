@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal do Saber — 28.0 (protótipo local)</title>
+<style>
+:root{--azul:#12234b;--claro:#f3f6fb;--verde:#12a89d;--texto:#17233b}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Arial,sans-serif;background:var(--claro);color:var(--texto)}header{background:var(--azul);color:white;padding:20px 16px}header h1{margin:0;font-size:25px}header p{margin:5px 0 0;color:#c9d7ef}nav{display:flex;gap:8px;overflow:auto;padding:12px;background:white;position:sticky;top:0;z-index:2;border-bottom:1px solid #dce3ed}button,.botao{border:0;border-radius:10px;padding:11px 14px;font-weight:700;cursor:pointer;background:var(--azul);color:white}nav button{white-space:nowrap;background:#e9eef8;color:var(--azul)}nav button.ativo{background:var(--azul);color:white}main{max-width:960px;margin:auto;padding:16px}.hero{background:linear-gradient(120deg,#12234b,#176e87);color:white;padding:25px;border-radius:18px}.hero h2{margin-top:0}.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}.cartao{background:white;border:1px solid #e1e7f0;border-radius:15px;padding:17px;box-shadow:0 3px 12px #1020440b}.cartao h3{margin:0 0 9px}small,.muted{color:#66758b}label{display:block;font-size:14px;font-weight:650;margin:12px 0 5px}input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px;font:inherit;background:white}textarea{min-height:78px}section{display:none}section.ativo{display:block}.linha{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.linha>*{flex:1}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px;text-align:left;border-bottom:1px solid #e4e9f0}th{background:#f2f5fa}.tabela{overflow:auto}.sucesso{color:#087b62}.aviso{color:#a14c00}.pill{display:inline-block;background:#dff8f4;color:#075b55;border-radius:30px;padding:5px 9px;font-size:12px}footer{text-align:center;padding:25px;color:#64748b}.vazio{color:#68758b;font-style:italic}.pergunta{margin:12px 0;padding:12px;background:#f5f7fb;border-radius:9px}.pergunta label{font-weight:400;margin:8px 0}.pergunta input{width:auto}button:disabled{opacity:.5} .perigo{background:#a22d40}.secundario{background:#e9eef8;color:#12234b}.acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.acoes button{flex:1}.status{font-size:12px;font-weight:700;padding:5px 9px;border-radius:30px;background:#eef5ff;color:#25416f}.resumo{font-size:13px;color:#64748b}.topo{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.notificacao{position:fixed;bottom:18px;left:16px;right:16px;max-width:440px;margin:auto;padding:14px;background:#12234b;color:white;border-radius:12px;z-index:10;box-shadow:0 10px 30px #0003;display:none}.nota{font-size:27px;font-weight:800;color:#0c766e}
+ .barra{height:10px;background:#e4ebf5;border-radius:20px;overflow:hidden}.progresso{height:100%;background:#12a89d}.destaque{border-left:5px solid #12a89d}.filtro{margin:12px 0}.etiqueta{font-size:12px;background:#eef3ff;color:#243d73;padding:5px 9px;border-radius:20px;display:inline-block} .barra-modulo{height:9px;background:#e4ebf5;border-radius:20px;overflow:hidden;margin:9px 0}.barra-modulo>span{display:block;height:100%;background:#12a89d}.filtros-aula{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:480px){.filtros-aula{grid-template-columns:1fr}} .curso-meta{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.curso-meta span{background:#eaf3f8;border-radius:20px;padding:5px 9px;font-size:12px}.curso-preco{font-size:20px;font-weight:800;color:#086d65}.curso-card p{overflow-wrap:anywhere}.curso-card button{margin-top:8px} .curso-aula{border-left:3px solid #12a89d;padding:10px;margin:9px 0;background:#f4f8fc;border-radius:7px}.curso-aula a{overflow-wrap:anywhere}.curso-modulo{padding:12px;border:1px solid #e1e7f0;border-radius:12px;margin:12px 0} 
+/* Versão 11: leitura confortável e caminhos claros */
+html{scroll-behavior:smooth}body{line-height:1.55}button,input,select,textarea{font-size:16px}button{min-height:44px}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #0a9d92;outline-offset:2px}h2{line-height:1.25}.escolhas{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.escolhas button{background:white;color:#12234b;min-height:56px}.legivel{font-size:18px;font-weight:700}.segmentos{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}.segmentos button{text-align:left;background:#eef5ff;color:#12234b;border:1px solid #cbd9ed;min-height:65px}details{padding:15px 0;border-bottom:1px solid #e1e7f0}summary{cursor:pointer;font-weight:750;font-size:17px}details p{line-height:1.8}.caminho{background:#eaf7f5;border:1px solid #b5dfd9;padding:12px 15px;border-radius:12px;margin-bottom:15px}.caminho button{background:transparent;color:#075c57;padding:4px 7px;min-height:35px}nav{scrollbar-width:thin}nav button{min-height:46px}@media(max-width:520px){header{padding:15px}main{padding:12px}.cartao{padding:15px}.hero{padding:20px}.segmentos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Aula ao vivo e materiais de educação inclusiva */
+.aula-online{border-left:5px solid #12a89d}.aula-online a{display:inline-block;background:#12234b;color:white;padding:12px 15px;border-radius:10px;text-decoration:none;font-weight:700;margin:5px 5px 5px 0}.aula-online a:focus-visible{outline:3px solid #12a89d}.ajuda-curta{background:#eaf7f5;border-radius:10px;padding:12px;margin:12px 0}.area-prof{border:1px solid #e1e7f0;border-radius:13px;padding:14px;margin:12px 0;background:white}
+
+.atalhos-prof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.atalhos-prof button{background:#e9eef8;color:#12234b;text-align:left;min-height:48px}.atalhos-prof button:focus-visible{outline:3px solid #0a9b90;outline-offset:2px}.area-prof,.cartao{scroll-margin-top:95px}@media(max-width:390px){.atalhos-prof{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="tema-futurista.css">
+</head>
+<body>
+<header><h1>🎓 Portal do Saber</h1><p>Aprender, ensinar e evoluir — versão 18.0 • demonstração local</p></header>
+<nav id="menu"><button data-aba="inicio" class="ativo">Início</button><button data-aba="cursos">Cursos</button><button data-aba="estudar">Estudar grátis</button><button data-aba="professor">Sou professor</button><button data-aba="aluno">Sou aluno</button><button data-aba="ajuda">Ajuda</button><button data-aba="admin">Administração</button></nav>
+<main><div class="caminho" id="caminho"><button type="button" onclick="abrir('inicio')">⌂ Início</button> <span id="localAtual">› Página inicial</span></div>
+<section id="inicio" class="ativo">
+<div class="hero"><h2>Bem-vindo ao Portal do Saber! 📚</h2><p>Um lugar para estudar, ensinar e acompanhar o aprendizado, com tudo explicado passo a passo.</p><p class="legivel">Escolha o que você quer fazer:</p><div class="escolhas"><button onclick="abrir('aluno')">🎒 Quero estudar</button><button onclick="abrir('professor')">👩‍🏫 Quero ensinar</button><button onclick="abrir('cursos')">📚 Ver cursos</button><button onclick="abrir('estudar')">Estudar grátis</button></div></div>
+<div class="cartao" style="margin-top:16px"><h2>Encontre o que você precisa</h2><p>Escolha sua etapa de estudo. Mostraremos apenas os cursos dessa etapa.</p><div class="segmentos" id="atalhosEtapas"></div></div>
+<div class="grade"><div class="cartao"><h3>👨‍👩‍👧 Para famílias</h3><p>Veja como funcionam as aulas, atividades e notas. A área de acompanhamento da família será criada em uma etapa futura.</p><button class="secundario" onclick="abrir('ajuda')">Entender como funciona</button></div><div class="cartao"><h3>🔒 Sobre esta versão</h3><p>É um teste no seu celular. Não existe cadastro verdadeiro nem pagamento. Use somente nomes inventados.</p><button class="secundario" onclick="abrir('ajuda')">Tirar dúvidas</button></div></div>
+</section>
+<section id="ajuda"><h2>❓ Como usar o Portal do Saber</h2><p>Escolha uma opção para ver o passo a passo.</p><div class="cartao"><details open><summary>🎒 Quero estudar</summary><p>1. Toque em <b>Sou aluno</b>.<br>2. Escolha um aluno de exemplo.<br>3. Veja as aulas, responda às atividades e consulte as notas.</p><button onclick="abrir('aluno')">Ir para a área do aluno</button></details><details><summary>👩‍🏫 Quero ensinar</summary><p>1. Toque em <b>Sou professor</b>.<br>2. Crie uma turma de exemplo.<br>3. Prepare uma atividade ou aula.<br>4. Registre as notas dos alunos fictícios.</p><button onclick="abrir('professor')">Ir para a área do professor</button></details><details><summary>👨‍👩‍👧 Sou mãe, pai ou responsável</summary><p>Por enquanto, você pode explorar os cursos e conhecer o boletim de exemplo. O acesso próprio para responsáveis será desenvolvido antes de usar dados reais.</p><button onclick="abrir('cursos')">Ver cursos</button></details><details><summary>🔐 Como faço meu cadastro?</summary><p>O cadastro verdadeiro ainda não está disponível. O acesso de professores, alunos e responsáveis será separado e protegido. Não informe dados pessoais nesta demonstração.</p></details><details><summary>📹 Como entro na aula ao vivo?</summary><p>O professor cria uma reunião no Meet, Zoom ou outro serviço e coloca o link aqui. Na área do aluno, toque em <b>Entrar na aula</b>. Se o professor compartilhar a gravação, aparecerá o botão <b>Assistir à gravação</b>.</p></details><details><summary>♿ Onde encontro Educação Inclusiva e Pedagogia?</summary><p>Toque em <b>Cursos</b> e escolha <b>Pedagogia</b> ou <b>Educação Inclusiva</b>. Essas áreas terão cursos e materiais próprios, conforme os professores forem cadastrando.</p></details><details><summary>💳 Preciso pagar?</summary><p>Não. Esta versão é gratuita e não faz cobranças. No futuro, haverá cursos gratuitos e pagos, sempre com preços claros antes da compra.</p></details></div></section>
+<section id="cursos"><h2>📚 Catálogo de cursos</h2><p class="muted">Explore os cursos demonstrativos. A compra de cursos pagos está desativada.</p><label for="filtroCurso">Escolha a etapa de estudo</label><select id="filtroCurso"><option value="">Todas as etapas</option><option>Fundamental I</option><option>Fundamental II</option><option>Ensino Médio</option><option>ENEM</option><option>Vestibular</option><option>Concurso</option><option>Tecnologia</option><option>Cursos livres</option><option>Pedagogia</option><option>Educação Inclusiva</option></select><label for="buscaCurso">Procure um curso</label><input id="buscaCurso" placeholder="Título, disciplina ou professor"><div class="grade" id="catalogo"></div><div id="detalhesCurso" hidden></div></section>
+<section id="estudar"><h2>Estudar grátis</h2><p class="muted">Materiais introdutórios originais para estudo. Este catálogo ainda está em construção e não substitui o conteúdo completo das disciplinas.</p>
+<label for="etapaEstudo">Etapa</label><select id="etapaEstudo"><option value="">Todas</option><option>Fundamental I</option><option>Fundamental II</option><option>Ensino Médio</option><option>ENEM</option><option>Tecnologia</option><option>Pedagogia</option><option>Educação Inclusiva</option></select>
+<label for="buscaEstudo">Buscar assunto</label><input id="buscaEstudo" placeholder="Ex.: frações, história, HTML" autocomplete="off">
+<p id="totalEstudos" role="status"></p><p id="resumoExercicios" role="status"></p><button type="button" class="secundario" id="limparExercicios">Apagar respostas de demonstração</button><p id="progressoEstudos" role="status"></p><label for="filtroEstudos">Mostrar</label><select id="filtroEstudos"><option value="todos">Todos</option><option value="pendentes">Ainda não estudados</option><option value="concluidos">Já estudados</option></select><button type="button" class="secundario" id="limparEstudos">Limpar progresso de demonstração</button><div id="listaEstudos" class="grade"></div>
+<div id="leituraEstudo" class="cartao" hidden tabindex="-1"></div></section>
+<section id="professor"><h2>Área do professor</h2><div class="cartao"><h3>Meus materiais</h3><p>Crie, organize e edite rascunhos de aulas, exercícios e vídeos em um só lugar.</p><a href="painel-professor.html">Abrir meus materiais</a></div><div class="cartao"><h3>Planejar uma aula</h3><p>Crie um plano com objetivos, conteúdo, atividades e avaliação. Funciona sem internet.</p><a href="planejar-aula.html">Abrir planejamento de aula</a></div>
+<div class="cartao" style="margin-bottom:14px" aria-label="Escolha o que deseja fazer"><h3>O que você quer fazer?</h3><p class="muted">Toque em uma opção para ir direto ao assunto.</p><div class="atalhos-prof">
+<button type="button" onclick="irFerramenta('turmas')">Minhas turmas</button>
+<button type="button" onclick="irFerramenta('cursos')">Meus cursos</button>
+<button type="button" onclick="irFerramenta('aulas')">Preparar aulas</button>
+<button type="button" onclick="irFerramenta('atividades')">Atividades e provas</button>
+<button type="button" onclick="irFerramenta('notas')">Notas e resultados</button>
+<button type="button" onclick="irFerramenta('ao-vivo')">Aulas ao vivo</button>
+</div></div><div class="ajuda-curta">👩‍🏫 Escolha o que deseja preparar: cursos, turmas, atividades ou aulas ao vivo. Você pode começar por qualquer opção.</div>
+<div class="area-prof"><h3>📹 Marcar aula ao vivo ou compartilhar gravação</h3><p>Use Meet, Zoom, Teams ou qualquer outro serviço. Crie o encontro no serviço escolhido e cole o link aqui.</p>
+<form id="formEncontro"><label for="encontroTurma">Para qual turma?</label><select id="encontroTurma" required></select><label for="encontroTitulo">Nome da aula</label><input id="encontroTitulo" required maxlength="100" placeholder="Ex.: Alfabetização na prática"><label for="encontroServico">Onde será a aula?</label><select id="encontroServico"><option>Google Meet</option><option>Zoom</option><option>Microsoft Teams</option><option>Outra plataforma</option></select><label for="encontroData">Dia e horário</label><input id="encontroData" type="datetime-local" required><label for="encontroLink">Link para entrar na aula (HTTPS)</label><input id="encontroLink" type="url" required placeholder="https://..."><label for="encontroGravacao">Link da gravação (opcional)</label><input id="encontroGravacao" type="url" placeholder="https://..."><p class="resumo">Só compartilhe gravações com autorização das pessoas envolvidas, especialmente quando houver crianças.</p><button type="submit">Salvar aula</button></form><div id="encontrosProfessor"></div></div><div class="cartao" style="margin-bottom:14px"><h3>🎓 Meus cursos</h3><p class="muted">Cadastre cursos gratuitos ou marque preços para vendas futuras. Os pagamentos estão desativados.</p><form id="formCurso"><label for="cursoTitulo">Nome do curso</label><input id="cursoTitulo" maxlength="100" required placeholder="Ex.: História do Brasil para ENEM"><label for="cursoProfessor">Professor responsável</label><input id="cursoProfessor" maxlength="80" required placeholder="Ex.: Professor Exemplo"><label for="cursoDisciplina">Disciplina</label><select id="cursoDisciplina"><option>História</option><option>Geografia</option><option>Matemática</option><option>Português</option><option>Física</option><option>Química</option><option>Biologia</option><option>Ciências</option><option>Programação</option><option>Outras</option></select><label for="cursoEtapa">Etapa</label><select id="cursoEtapa"><option>Fundamental I</option><option>Fundamental II</option><option>Ensino Médio</option><option>ENEM</option><option>Vestibular</option><option>Concurso</option><option>Tecnologia</option><option>Cursos livres</option><option>Pedagogia</option><option>Educação Inclusiva</option></select><label for="cursoDescricao">Descrição</label><textarea id="cursoDescricao" required maxlength="700" placeholder="O que o aluno vai aprender?"></textarea><label for="cursoCarga">Duração do curso (em horas)</label><input id="cursoCarga" type="number" min="1" max="2000" value="10" required><label for="cursoModalidade">O curso será gratuito?</label><select id="cursoModalidade"><option value="gratuito">Gratuito</option><option value="pago">Pago futuramente</option></select><label for="cursoPreco">Preço futuro (R$)</label><input id="cursoPreco" type="number" min="0" max="100000" step="0.01" value="0"><button style="margin-top:12px">Cadastrar curso</button></form><div class="cartao" style="margin:14px 0;background:#f5fafb"><h3>📚 Organizar aulas por curso e módulo</h3><p class="muted">Adicione aulas a um módulo existente. Use links HTTPS para vídeos e materiais externos.</p><div class="cartao" style="margin:12px 0;background:#f5fafb"><h4>Usar material já preparado</h4><p class="muted">Selecione um rascunho salvo em “Meus materiais” para preencher a aula sem digitar tudo novamente.</p><label for="materialExistente">Rascunho</label><select id="materialExistente"><option value="">Selecione um material</option></select><div class="acoes"><button type="button" class="secundario" id="atualizarMateriais">Atualizar lista</button><button type="button" id="usarMaterial">Preencher aula</button><a href="painel-professor.html">Abrir Meus materiais</a></div><p class="resumo">Os rascunhos ficam apenas neste navegador. Selecione o curso e o módulo e confirme em “Adicionar aula ao módulo”.</p></div><form id="formAulaCurso"><label for="vinculoCurso">Curso</label><select id="vinculoCurso" required></select><label for="vinculoModulo">Módulo</label><select id="vinculoModulo" required></select><label for="vinculoTitulo">Título da aula</label><input id="vinculoTitulo" required maxlength="100" placeholder="Ex.: Brasil Colônia — Introdução"><label for="vinculoTexto">Resumo da aula</label><textarea id="vinculoTexto" required maxlength="1200"></textarea><label for="vinculoLink">Endereço do vídeo ou material (opcional)</label><input id="vinculoLink" type="url" placeholder="https://..."><button style="margin-top:12px">Adicionar aula ao módulo</button></form><div id="aulasVinculadas"></div></div><div id="cursosProfessor"></div></div><p class="muted">Ambiente demonstrativo: sem autenticação real.</p><div class="cartao" style="margin-bottom:14px"><h3>📊 Como estão minhas turmas</h3><p class="muted">Relatório demonstrativo calculado a partir das matrículas e notas locais.</p><label for="relatorioTurma">Filtrar turma</label><select id="relatorioTurma"><option value="">Todas as turmas</option></select><div class="grade" id="indicadoresProfessor"></div><div id="relatorioProfessor"></div><button type="button" class="secundario" onclick="exportarRelatorio()">Exportar relatório CSV</button></div><div class="grade"><div class="cartao"><h3>Nova turma</h3><form id="formTurma"><label>Nome da turma</label><input id="turmaNome" required placeholder="Ex.: História 9º ano"><label>Etapa</label><select id="turmaEtapa"><option>Fundamental I</option><option>Fundamental II</option><option>Ensino Médio</option><option>ENEM</option><option>Vestibular</option><option>Concurso</option><option>Tecnologia</option></select><button style="margin-top:12px">Criar turma</button></form></div><div class="cartao"><h3>Nova atividade</h3><form id="formAtividade"><label>Turma</label><select id="atividadeTurma" required></select><label>Disciplina</label><select id="disciplina"><option>História</option><option>Geografia</option><option>Matemática</option><option>Português</option><option>Ciências</option><option>Física</option><option>Química</option><option>Biologia</option><option>Programação</option><option>Outras</option></select><label>Tipo de atividade</label><select id="tipoAtividade"><option value="regular">Atividade regular</option><option value="recuperacao">Recuperação</option></select><label>Pergunta</label><textarea id="pergunta" required placeholder="Escreva a pergunta"></textarea><label>Alternativa A</label><input id="altA" required><label>Alternativa B</label><input id="altB" required><label>Alternativa C</label><input id="altC" required><label>Resposta correta</label><select id="correta"><option value="0">A</option><option value="1">B</option><option value="2">C</option></select><button style="margin-top:12px">Publicar atividade</button></form></div></div><div class="cartao" style="margin-top:14px"><h3>👥 Cadastrar aluno na turma</h3><form id="formMatricula"><label>Nome fictício do aluno</label><input id="matriculaAluno" required maxlength="70" placeholder="Ex.: Aluno Exemplo"><label>Turma</label><select id="matriculaTurma" required></select><button style="margin-top:12px">Matricular aluno</button></form><div id="listaMatriculas"></div></div><div class="cartao" style="margin-top:14px"><h3>📚 Banco de questões e simulados</h3><p class="muted">Monte simulados agrupando as questões publicadas na mesma turma.</p><label>Turma do simulado</label><select id="simuladoTurma"></select><label>Título do simulado</label><input id="simuladoTitulo" placeholder="Ex.: Revisão de História — ENEM" maxlength="100"><button type="button" style="margin-top:12px" onclick="criarSimulado()">Criar simulado com as questões da turma</button><div id="listaBanco"></div></div><div class="cartao" style="margin-top:14px"><h3>🎬 Publicar videoaula e material</h3><p class="muted">Adicione uma aula por módulo, com explicação e link público HTTPS para vídeo ou material. Não envie dados pessoais.</p><form id="formAula"><label>Turma</label><select id="aulaTurma" required></select><label>Módulo</label><input id="aulaModulo" required maxlength="70" placeholder="Ex.: Brasil Colônia"><label>Título da aula</label><input id="aulaTitulo" required maxlength="100" placeholder="Ex.: Capitanias hereditárias"><label>Explicação da aula</label><textarea id="aulaTexto" required maxlength="4000" placeholder="Resumo, orientações e atividades..."></textarea><label>Endereço do vídeo ou material (opcional)</label><input id="aulaLink" type="url" placeholder="https://..."><label>Tipo do link</label><select id="aulaTipo"><option value="video">Videoaula</option><option value="material">Material didático</option></select><button style="margin-top:12px">Publicar aula</button></form><div id="aulasProfessor"></div><p class="resumo">As alterações são apenas locais. Use nomes fictícios.</p></div><h3>Minhas turmas</h3><div id="listaTurmas" class="grade"></div><div class="cartao" style="margin-top:14px"><h3>Registrar nota manual</h3><form id="formNota"><label>Aluno</label><select id="nomeAluno" required></select><label>Turma</label><select id="notaTurma" required></select><label>Nota (0 a 10)</label><input id="valorNota" type="number" min="0" max="10" step="0.1" required><button style="margin-top:12px">Registrar nota</button></form></div></section>
+<section id="aluno"><h2>Área do aluno</h2><div class="cartao" style="margin-bottom:14px"><h3>📹 Minhas aulas ao vivo e gravadas</h3><p class="muted">Encontre o horário e toque no link da aula. Se houver gravação, ela aparecerá aqui.</p><div id="encontrosAluno"></div></div><p class="muted">Selecione um perfil fictício para simular o boletim. Isto NÃO é login real.</p><div class="cartao destaque"><label for="alunoAtivo">Aluno em demonstração</label><select id="alunoAtivo"></select><p class="resumo">As atividades são disponibilizadas apenas para as turmas em que o aluno está matriculado.</p></div><div class="cartao" style="margin-top:14px"><h3>📚 Minhas aulas e materiais</h3><div class="filtros-aula"><div><label for="buscaAula">Buscar aula</label><input id="buscaAula" placeholder="Título, módulo ou conteúdo"></div><div><label for="filtroModulo">Filtrar módulo</label><select id="filtroModulo"><option value="">Todos os módulos</option></select></div></div><div id="resumoAulas"></div><div id="aulasAluno"></div></div><div class="cartao" style="margin-top:14px"><h3>📈 Meu progresso por turma</h3><div id="progressoAluno"></div></div><div class="cartao"><h3>Atividades disponíveis</h3><div id="listaAtividades"></div></div><div class="cartao" style="margin-top:14px"><h3>📝 Meus simulados</h3><div id="listaSimulados"></div></div><div class="cartao" style="margin-top:14px"><h3>Meu boletim</h3><div id="boletim"></div></div></section>
+<section id="admin"><h2>Área de administração</h2><p class="muted">Dados demonstrativos do navegador. Nenhum pagamento é realizado. Não use dados reais de alunos.</p><div class="grade"><div class="cartao"><h3>Turmas</h3><div id="totalTurmas" class="nota">0</div></div><div class="cartao"><h3>Atividades</h3><div id="totalAtividades" class="nota">0</div></div><div class="cartao"><h3>Notas registradas</h3><div id="totalNotas" class="nota">0</div></div></div><div class="cartao" style="margin-top:14px"><h3>⚙️ Critérios de avaliação</h3><label for="mediaMinima">Média mínima para aprovação (demonstração)</label><input id="mediaMinima" type="number" min="0" max="10" step="0.5" value="7"><p class="resumo">Cada turma terá regras próprias na versão com banco de dados.</p></div><div class="cartao" style="margin-top:14px"><h3>💰 Simulador de comissões</h3><label>Preço do curso (R$)</label><input id="preco" type="number" min="0" step="0.01" value="100"><p>Professor (70%): <strong id="profRecebe">R$ 70,00</strong></p><p>Portal do Saber (30%): <strong id="portalRecebe">R$ 30,00</strong></p><small>Valores brutos ilustrativos, antes de taxas e impostos. Pagamentos desativados.</small></div><div class="cartao" style="margin-top:14px"><h3>Histórico de notas</h3><div id="historico"></div></div><div class="cartao" style="margin-top:14px"><h3>💾 Backup dos dados de demonstração</h3><p class="muted">Exporte as turmas, matrículas, atividades e notas deste navegador.</p><div class="acoes"><button type="button" onclick="exportar()">Exportar JSON</button><label class="botao" style="text-align:center;cursor:pointer">Importar backup <input id="arquivoBackup" type="file" accept=".json,application/json" style="display:none"></label><button type="button" class="perigo" onclick="reiniciar()">Reiniciar demonstração</button></div></div></section>
+</main><footer>Portal do Saber • Protótipo local • Não usar dados pessoais reais • Pagamentos desativados</footer><div class="notificacao" id="toast" role="status" aria-live="polite"></div>
+<script>
+function irFerramenta(tipo){
+ const chaves={turmas:['turma','matrícula'],cursos:['meus cursos'],aulas:['publicar videoaula','organizar aulas'],atividades:['atividades','questões'],notas:['registrar nota','como estão minhas turmas'], 'ao-vivo':['marcar aula ao vivo']};
+ const titulos=[...document.querySelectorAll('#professor h3')];
+ const achou=titulos.find(h=>(chaves[tipo]||[]).some(t=>h.textContent.toLocaleLowerCase('pt-BR').includes(t)));
+ if(!achou){aviso('Esta opção ainda está sendo organizada.');return;}
+ const destino=achou.closest('.cartao,.area-prof')||achou;
+ destino.scrollIntoView({behavior:'smooth',block:'start'});
+ destino.setAttribute('tabindex','-1');destino.focus({preventScroll:true});
+}
+
+// Dados de demonstração salvos somente neste navegador.
+const CHAVE='portal_saber_demo_v3'; // Mantém os dados criados na versão anterior.
+const inicial={turmas:[{id:'t1',nome:'História — ENEM',etapa:'ENEM'}],atividades:[{id:'a1',turma:'t1',pergunta:'Qual acontecimento marcou o início da Idade Moderna na periodização tradicional?',alternativas:['Queda de Constantinopla','Revolução Francesa','Independência do Brasil'],correta:0}],notas:[],alunos:['Aluno Exemplo'],matriculas:[{aluno:'Aluno Exemplo',turma:'t1'}]};
+let dados;
+try{const salvo=JSON.parse(localStorage.getItem(CHAVE));dados=salvo&&Array.isArray(salvo.turmas)&&Array.isArray(salvo.atividades)&&Array.isArray(salvo.notas)?salvo:structuredClone(inicial)}catch(e){dados=structuredClone(inicial)}
+dados.alunos=Array.isArray(dados.alunos)?dados.alunos:['Aluno Exemplo'];dados.matriculas=Array.isArray(dados.matriculas)?dados.matriculas:[{aluno:'Aluno Exemplo',turma:'t1'}];dados.simulados=Array.isArray(dados.simulados)?dados.simulados:[];dados.tentativas=Array.isArray(dados.tentativas)?dados.tentativas:[];dados.aulas=Array.isArray(dados.aulas)?dados.aulas:[];dados.conclusoes=Array.isArray(dados.conclusoes)?dados.conclusoes:[];dados.cursos=Array.isArray(dados.cursos)?dados.cursos:[];dados.encontros=Array.isArray(dados.encontros)?dados.encontros:[];
+const $=id=>document.getElementById(id);
+let alunoSelecionado='Aluno Exemplo';
+const moeda=v=>Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const escapar=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function aviso(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.avisoTimer);window.avisoTimer=setTimeout(()=>t.style.display='none',3200)}
+const id=()=>String(Date.now())+Math.random().toString(36).slice(2,6);
+function salvar(){try{localStorage.setItem(CHAVE,JSON.stringify(dados))}catch(e){alert('Não foi possível salvar no navegador.')}renderizar()}
+function escolherEtapa(etapa){abrir('cursos');const seletor=document.getElementById('filtroCurso');seletor.value=etapa;seletor.dispatchEvent(new Event('change'));document.getElementById('catalogo').scrollIntoView({block:'nearest'});}
+function montarAtalhos(){const nomes=[['📘','Fundamental I'],['📗','Fundamental II'],['🎓','Ensino Médio'],['📝','ENEM'],['🏛️','Vestibular'],['⚖️','Concurso'],['💻','Tecnologia'],['🌎','Cursos livres'],['🧩','Pedagogia'],['♿','Educação Inclusiva']];document.getElementById('atalhosEtapas').innerHTML=nomes.map(([icone,nome])=>`<button type="button" onclick="escolherEtapa('${nome}')">${icone} ${nome}</button>`).join('');}
+function abrir(aba){document.querySelectorAll('main section').forEach(s=>s.classList.toggle('ativo',s.id===aba));document.querySelectorAll('#menu button').forEach(b=>b.classList.toggle('ativo',b.dataset.aba===aba));const titulos={inicio:'Página inicial',cursos:'Cursos por etapa',estudar:'Estudar grátis',professor:'Área do professor',aluno:'Área do aluno',admin:'Administração',ajuda:'Ajuda e orientações'};document.getElementById('localAtual').textContent='› '+(titulos[aba]||'Portal do Saber');window.scrollTo(0,0)}
+$('menu').addEventListener('click',e=>{const b=e.target.closest('button[data-aba]');if(b)abrir(b.dataset.aba)});
+$('formTurma').addEventListener('submit',e=>{e.preventDefault();dados.turmas.push({id:id(),nome:$('turmaNome').value.trim(),etapa:$('turmaEtapa').value});e.target.reset();salvar();aviso('Turma criada!')});
+$('formAtividade').addEventListener('submit',e=>{e.preventDefault();if(!dados.turmas.length)return alert('Crie uma turma primeiro.');dados.atividades.push({id:id(),turma:$('atividadeTurma').value,pergunta:$('pergunta').value.trim(),alternativas:[$('altA').value.trim(),$('altB').value.trim(),$('altC').value.trim()],correta:Number($('correta').value),disciplina:$('disciplina').value,tipo:$('tipoAtividade').value});e.target.reset();salvar();aviso('Atividade publicada!')});
+$('formMatricula').addEventListener('submit',e=>{e.preventDefault();const aluno=$('matriculaAluno').value.trim(),turma=$('matriculaTurma').value;if(!aluno||!turma)return;if(!dados.alunos.includes(aluno))dados.alunos.push(aluno);if(dados.matriculas.some(m=>m.aluno===aluno&&m.turma===turma))return aviso('Aluno já matriculado nesta turma.');dados.matriculas.push({aluno,turma});e.target.reset();salvar();aviso('Matrícula demonstrativa realizada!')});
+$('formNota').addEventListener('submit',e=>{e.preventDefault();const valor=Number($('valorNota').value);if(!Number.isFinite(valor)||valor<0||valor>10)return alert('Nota inválida.');if(!dados.matriculas.some(m=>m.aluno===$('nomeAluno').value&&m.turma===$('notaTurma').value))return aviso('Matricule o aluno nessa turma primeiro.');dados.notas.push({id:id(),aluno:$('nomeAluno').value, turma:$('notaTurma').value,valor:valor,origem:'Professor',data:new Date().toLocaleString('pt-BR')});salvar();aviso('Nota registrada!')});
+function responder(aid){
+ const a=dados.atividades.find(x=>x.id===aid);if(!a)return;
+ if(dados.tentativas.some(t=>t.aluno===alunoSelecionado&&t.atividade===aid))return aviso('Atividade já respondida.');
+ const selecionada=document.querySelector('input[name="resposta_'+aid+'"]:checked');if(!selecionada)return alert('Escolha uma alternativa.');
+ if(!dados.matriculas.some(m=>m.aluno===alunoSelecionado&&m.turma===a.turma))return aviso('Aluno não matriculado nesta turma.');
+ const acertou=Number(selecionada.value)===a.correta;
+ dados.tentativas.push({aluno:alunoSelecionado,atividade:aid,resposta:Number(selecionada.value),acertou});
+ dados.notas.push({id:id(),aluno:alunoSelecionado,turma:a.turma,valor:acertou?10:0,origem:a.tipo==='recuperacao'?'Recuperação':'Atividade',data:new Date().toLocaleString('pt-BR')});
+ salvar();aviso(acertou?'Resposta correta!':'Resposta registrada. Confira o conteúdo e continue estudando.');
+}
+function criarSimulado(){
+ const turma=$('simuladoTurma').value,titulo=$('simuladoTitulo').value.trim();
+ const questoes=dados.atividades.filter(a=>a.turma===turma&&a.tipo!=='recuperacao').map(a=>a.id);
+ if(!titulo)return aviso('Digite o título do simulado.');
+ if(questoes.length<2)return aviso('Publique pelo menos duas questões regulares nessa turma.');
+ dados.simulados.push({id:id(),turma,titulo,questoes});$('simuladoTitulo').value='';salvar();aviso('Simulado criado!');
+}
+function responderSimulado(sid){
+ const sim=dados.simulados.find(s=>s.id===sid);if(!sim)return;
+ if(dados.tentativas.some(t=>t.aluno===alunoSelecionado&&t.simulado===sid))return aviso('Simulado já realizado.');
+ if(!dados.matriculas.some(m=>m.aluno===alunoSelecionado&&m.turma===sim.turma))return aviso('Aluno não matriculado.');
+ const questoes=sim.questoes.map(q=>dados.atividades.find(a=>a.id===q)).filter(Boolean);
+ if(!questoes.length)return aviso('Simulado sem questões.');
+ const respostas=[];
+ for(const q of questoes){const marcado=document.querySelector('input[name="sim_'+sid+'_'+q.id+'"]:checked');if(!marcado)return aviso('Responda todas as questões antes de enviar.');respostas.push(Number(marcado.value));}
+ const acertos=questoes.filter((q,i)=>q.correta===respostas[i]).length;
+ const nota=Math.round(acertos/questoes.length*100)/10;
+ dados.tentativas.push({aluno:alunoSelecionado,simulado:sid,acertos,total:questoes.length});
+ dados.notas.push({id:id(),aluno:alunoSelecionado,turma:sim.turma,valor:nota,origem:'Simulado: '+sim.titulo,data:new Date().toLocaleString('pt-BR')});
+ salvar();aviso('Simulado concluído: '+acertos+' de '+questoes.length+' acertos.');
+}
+// Aceita apenas URLs HTTPS para evitar links executáveis inseridos nos campos.
+function linkSeguro(valor){try{const u=new URL(valor);return u.protocol==='https:'?u.href:''}catch(e){return ''}}
+$('formAula').addEventListener('submit',e=>{e.preventDefault();const link=$('aulaLink').value.trim();if(link&&!linkSeguro(link))return aviso('Use apenas links HTTPS válidos.');const turma=$('aulaTurma').value;if(!dados.turmas.some(t=>t.id===turma))return aviso('Selecione uma turma.');dados.aulas.push({id:id(),turma,modulo:$('aulaModulo').value.trim(),titulo:$('aulaTitulo').value.trim(),texto:$('aulaTexto').value.trim(),link:linkSeguro(link),tipo:$('aulaTipo').value});e.target.reset();salvar();aviso('Aula publicada na demonstração!')});
+function concluirAula(aid){const a=dados.aulas.find(x=>x.id===aid);if(!a||!dados.matriculas.some(m=>m.aluno===alunoSelecionado&&m.turma===a.turma))return aviso('Aula indisponível.');if(!dados.conclusoes.some(c=>c.aluno===alunoSelecionado&&c.aula===aid))dados.conclusoes.push({aluno:alunoSelecionado,aula:aid,data:new Date().toLocaleString('pt-BR')});salvar();aviso('Aula marcada como concluída!')}
+// Edita uma aula já publicada sem alterar seu identificador nem o progresso do aluno.
+function editarAula(aid){
+ const aula=dados.aulas.find(a=>a.id===aid);if(!aula)return;
+ const titulo=prompt('Título da aula:',aula.titulo);if(titulo===null)return;
+ if(!titulo.trim()||titulo.trim().length>100)return aviso('Título inválido.');
+ const modulo=prompt('Módulo:',aula.modulo);if(modulo===null)return;
+ if(!modulo.trim()||modulo.trim().length>70)return aviso('Módulo inválido.');
+ const texto=prompt('Explicação da aula:',aula.texto);if(texto===null)return;
+ if(!texto.trim()||texto.length>4000)return aviso('Texto inválido.');
+ const link=prompt('Link HTTPS (pode ficar vazio):',aula.link||'');if(link===null)return;
+ if(link.trim()&&!linkSeguro(link.trim()))return aviso('Use um link HTTPS válido.');
+ Object.assign(aula,{titulo:titulo.trim(),modulo:modulo.trim(),texto:texto.trim(),link:linkSeguro(link.trim())});
+ salvar();aviso('Aula atualizada!');
+}
+// A biblioteca é filtrada sem alterar os dados salvos.
+function renderizarBiblioteca(){
+ const busca=($('buscaAula').value||'').toLocaleLowerCase('pt-BR').trim();
+ const modulo=$('filtroModulo').value;
+ const aulas=dados.aulas.filter(a=>dados.matriculas.some(m=>m.aluno===alunoSelecionado&&m.turma===a.turma));
+ const modulos=[...new Set(aulas.map(a=>a.modulo))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ $('filtroModulo').innerHTML='<option value="">Todos os módulos</option>'+modulos.map(m=>`<option value="${escapar(m)}" ${m===modulo?'selected':''}>${escapar(m)}</option>`).join('');
+ const total=aulas.length,concluidas=aulas.filter(a=>dados.conclusoes.some(c=>c.aluno===alunoSelecionado&&c.aula===a.id)).length;
+ const percentual=total?Math.round(concluidas/total*100):0;
+ $('resumoAulas').innerHTML=`<p><strong>${concluidas} de ${total} aulas concluídas (${percentual}%)</strong></p><div class="barra-modulo"><span style="width:${percentual}%"></span></div>`;
+ const filtradas=aulas.filter(a=>(!modulo||a.modulo===modulo)&&(!busca||[a.titulo,a.modulo,a.texto].join(' ').toLocaleLowerCase('pt-BR').includes(busca)));
+ $('aulasAluno').innerHTML=filtradas.map(a=>{const concluida=dados.conclusoes.some(c=>c.aluno===alunoSelecionado&&c.aula===a.id);const url=linkSeguro(a.link);return `<article class="pergunta"><span class="pill">${escapar(a.modulo)}</span><h4>${escapar(a.titulo)}</h4><p class="muted">${escapar(dados.turmas.find(t=>t.id===a.turma)?.nome||'Turma')}</p><p style="white-space:pre-wrap">${escapar(a.texto)}</p>${url?`<p><a href="${escapar(url)}" target="_blank" rel="noopener noreferrer">Abrir ${a.tipo==='video'?'videoaula':'material'} ↗</a></p>`:''}<button type="button" ${concluida?'disabled':''} onclick="concluirAula('${a.id}')">${concluida?'✓ Aula concluída':'Marcar como concluída'}</button></article>`}).join('')||'<p class="vazio">Nenhuma aula encontrada para este filtro.</p>';
+}
+$('buscaAula').addEventListener('input',renderizarBiblioteca);
+$('filtroModulo').addEventListener('change',renderizarBiblioteca);
+function excluirAula(aid){if(!confirm('Excluir esta aula demonstrativa?'))return;dados.aulas=dados.aulas.filter(a=>a.id!==aid);dados.conclusoes=dados.conclusoes.filter(c=>c.aula!==aid);salvar();aviso('Aula excluída.')}
+function editarNota(nid){const n=dados.notas.find(x=>x.id===nid);if(!n)return;const valor=prompt('Nova nota entre 0 e 10:',String(n.valor));if(valor===null)return;const v=Number(valor.replace(',','.'));if(!Number.isFinite(v)||v<0||v>10)return aviso('Nota inválida.');n.alteracoes=n.alteracoes||[];n.alteracoes.push({anterior:n.valor,novo:v,data:new Date().toLocaleString('pt-BR')});n.valor=v;salvar();aviso('Nota atualizada com histórico!')}
+function exportar(){const blob=new Blob([JSON.stringify(dados,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='portal-do-saber-backup.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$('arquivoBackup').addEventListener('change',async e=>{
+ const arquivo=e.target.files[0];if(!arquivo)return;
+ try{
+  if(arquivo.size>2000000)throw Error('Arquivo muito grande.');
+  const novo=JSON.parse(await arquivo.text());
+  if(!novo||!['turmas','atividades','notas','alunos','matriculas'].every(k=>Array.isArray(novo[k])))throw Error('Formato de backup inválido.');
+  if(!confirm('Substituir os dados demonstrativos atuais pelos dados do backup?'))return;
+  dados={...novo,simulados:Array.isArray(novo.simulados)?novo.simulados:[],tentativas:Array.isArray(novo.tentativas)?novo.tentativas:[],aulas:Array.isArray(novo.aulas)?novo.aulas:[],conclusoes:Array.isArray(novo.conclusoes)?novo.conclusoes:[],cursos:Array.isArray(novo.cursos)?novo.cursos:[]};salvar();aviso('Backup importado!');
+ }catch(erro){alert('Não foi possível importar: '+erro.message)}finally{e.target.value=''}
+});
+function reiniciar(){if(!confirm('Apagar todos os dados locais de demonstração deste navegador?'))return;dados=structuredClone(inicial);dados.simulados=[];dados.tentativas=[];dados.aulas=[];dados.conclusoes=[];dados.cursos=[];dados.encontros=[];salvar();aviso('Demonstração reiniciada.')}
+// Relatórios: não alteram notas, somente apresentam os registros já existentes.
+function resumoRelatorio(){
+ const filtro=$('relatorioTurma').value;
+ const turmas=dados.turmas.filter(t=>!filtro||t.id===filtro);
+ const minimo=Math.max(0,Math.min(10,Number($('mediaMinima').value)||7));
+ const linhas=[];
+ for(const turma of turmas){
+  for(const m of dados.matriculas.filter(x=>x.turma===turma.id)){
+   const ns=dados.notas.filter(n=>n.turma===turma.id&&n.aluno===m.aluno);
+   const media=ns.length?ns.reduce((s,n)=>s+Number(n.valor),0)/ns.length:null;
+   const concluidas=dados.conclusoes.filter(c=>c.aluno===m.aluno&&dados.aulas.some(a=>a.id===c.aula&&a.turma===turma.id)).length;
+   const totalAulas=dados.aulas.filter(a=>a.turma===turma.id).length;
+   linhas.push({turma:turma.nome,aluno:m.aluno,media,avaliacoes:ns.length,concluidas,totalAulas,status:media===null?'Sem avaliação':media<minimo?'Recuperação':'Na média'});
+  }
+ }
+ return linhas;
+}
+function renderizarRelatorio(){
+ const select=$('relatorioTurma'),anterior=select.value;
+ select.innerHTML='<option value="">Todas as turmas</option>'+dados.turmas.map(t=>`<option value="${escapar(t.id)}">${escapar(t.nome)}</option>`).join('');
+ select.value=dados.turmas.some(t=>t.id===anterior)?anterior:'';
+ const linhas=resumoRelatorio(),avaliados=linhas.filter(l=>l.media!==null),abaixo=avaliados.filter(l=>l.status==='Recuperação');
+ const media=avaliados.length?avaliados.reduce((s,l)=>s+l.media,0)/avaliados.length:null;
+ $('indicadoresProfessor').innerHTML=`<div class="cartao"><strong>👥 Matrículas</strong><div class="nota">${linhas.length}</div></div><div class="cartao"><strong>📉 Recuperação</strong><div class="nota">${abaixo.length}</div></div><div class="cartao"><strong>📈 Média das médias</strong><div class="nota">${media===null?'—':media.toFixed(1)}</div></div>`;
+ $('relatorioProfessor').innerHTML='<div class="tabela"><table><thead><tr><th>Aluno</th><th>Turma</th><th>Média</th><th>Situação</th><th>Aulas</th></tr></thead><tbody>'+linhas.map(l=>`<tr><td>${escapar(l.aluno)}</td><td>${escapar(l.turma)}</td><td>${l.media===null?'—':l.media.toFixed(1)}</td><td>${escapar(l.status)}</td><td>${l.concluidas}/${l.totalAulas}</td></tr>`).join('')+'</tbody></table></div>'+(linhas.length?'':'<p class="vazio">Sem alunos matriculados neste filtro.</p>')+'<p class="resumo">Média simples de todas as notas registradas na turma, inclusive recuperação. Ainda não representa um boletim escolar oficial.</p>';
+}
+function exportarRelatorio(){
+ const linhas=resumoRelatorio();
+ const campos=[['Aluno','Turma','Media','Avaliacoes','Situacao','Aulas concluidas','Total de aulas'],...linhas.map(l=>[l.aluno,l.turma,l.media===null?'':l.media.toFixed(1).replace('.',','),l.avaliacoes,l.status,l.concluidas,l.totalAulas])];
+ const csv='\uFEFF'+campos.map(l=>l.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+ const a=document.createElement('a');a.href=url;a.download='portal-do-saber-relatorio.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+$('relatorioTurma').addEventListener('change',renderizarRelatorio);
+
+// Cursos são registros locais. Nenhum dado financeiro é enviado a servidores.
+$('formCurso').addEventListener('submit',e=>{
+ e.preventDefault();
+ const modalidade=$('cursoModalidade').value;
+ const preco=Number($('cursoPreco').value);
+ const carga=Number($('cursoCarga').value);
+ if(!Number.isFinite(preco)||preco<0||preco>100000||!Number.isInteger(carga)||carga<1||carga>2000)return aviso('Confira preço e carga horária.');
+ if(modalidade==='pago'&&preco<=0)return aviso('Informe um preço futuro maior que zero.');
+ dados.cursos.push({id:id(),titulo:$('cursoTitulo').value.trim(),professor:$('cursoProfessor').value.trim(),disciplina:$('cursoDisciplina').value,etapa:$('cursoEtapa').value,descricao:$('cursoDescricao').value.trim(),carga,modalidade,preco:modalidade==='pago'?preco:0,modulos:[]});
+ e.target.reset();salvar();aviso('Curso cadastrado na demonstração!');
+});
+function excluirCurso(cid){if(!confirm('Excluir este curso demonstrativo?'))return;dados.cursos=dados.cursos.filter(c=>c.id!==cid);salvar();aviso('Curso excluído.');}
+function adicionarModulo(cid){const curso=dados.cursos.find(c=>c.id===cid);if(!curso)return;const titulo=prompt('Nome do módulo (máximo 80 caracteres):');if(!titulo||!titulo.trim())return;curso.modulos=Array.isArray(curso.modulos)?curso.modulos:[];curso.modulos.push({id:id(),titulo:titulo.trim().slice(0,80)});salvar();aviso('Módulo adicionado!');}
+function mostrarCurso(cid){
+ const c=dados.cursos.find(x=>x.id===cid);if(!c)return;
+ const partes=(c.modulos||[]).map((m,i)=>{const aulas=(m.aulas||[]).map((a,j)=>`<div class="curso-aula"><strong>${j+1}. ${escapar(a.titulo)}</strong><p>${escapar(a.texto)}</p>${a.link&&linkSeguro(a.link)?`<a target="_blank" rel="noopener noreferrer" href="${escapar(linkSeguro(a.link))}">Abrir material ou videoaula ↗</a>`:''}</div>`).join('')||'<p class="vazio">Aulas em preparação.</p>';return `<div class="curso-modulo"><h4>Módulo ${i+1}: ${escapar(m.titulo)}</h4>${aulas}</div>`}).join('')||'<p class="vazio">Módulos em preparação.</p>';
+ $('detalhesCurso').innerHTML=`<div class="cartao"><button class="secundario" type="button" onclick="fecharCurso()">← Voltar ao catálogo</button><h2>${escapar(c.titulo)}</h2><p>${escapar(c.descricao)}</p><p class="resumo">${escapar(c.professor)} · ${escapar(c.etapa)} · ${Number(c.carga)||0} horas</p><p class="pill">${c.modalidade==='pago'?'Pagamento futuro — não disponível':'Curso demonstrativo gratuito'}</p>${partes}</div>`;
+ $('detalhesCurso').hidden=false;$('catalogo').hidden=true;$('detalhesCurso').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function fecharCurso(){$('detalhesCurso').hidden=true;$('catalogo').hidden=false;}
+function atualizarModulosCurso(){
+ const c=dados.cursos.find(x=>x.id===$('vinculoCurso').value);
+ $('vinculoModulo').innerHTML=(c?.modulos||[]).map(m=>`<option value="${escapar(m.id)}">${escapar(m.titulo)}</option>`).join('');
+ $('aulasVinculadas').innerHTML=c?(c.modulos||[]).map(m=>`<div class="curso-modulo"><b>${escapar(m.titulo)}</b>${(m.aulas||[]).map(a=>`<div class="curso-aula">${escapar(a.titulo)} <button class="perigo" type="button" onclick="excluirAulaCurso('${c.id}','${m.id}','${a.id}')">Excluir</button></div>`).join('')||'<p class="vazio">Sem aulas.</p>'}</div>`).join(''):'<p class="vazio">Cadastre um curso primeiro.</p>';
+}
+function excluirAulaCurso(cid,mid,aid){if(!confirm('Excluir esta aula do módulo?'))return;const c=dados.cursos.find(x=>x.id===cid),m=c?.modulos?.find(x=>x.id===mid);if(!m)return;m.aulas=(m.aulas||[]).filter(x=>x.id!==aid);salvar();aviso('Aula excluída do módulo.');}
+$('vinculoCurso').addEventListener('change',atualizarModulosCurso);
+// Integração local entre os rascunhos e o cadastro de aulas em cursos.
+// Não é uma integração entre usuários nem publicação em servidor.
+const CHAVE_MATERIAIS='portalSaberMateriaisV28';
+function lerMateriais(){
+ try{
+  const lista=JSON.parse(localStorage.getItem(CHAVE_MATERIAIS)||'[]');
+  return Array.isArray(lista)?lista.filter(m=>m&&typeof m.id==='string'&&typeof m.titulo==='string'&&typeof m.conteudo==='string').slice(0,500):[];
+ }catch{return []}
+}
+function atualizarMateriais(){
+ const seletor=$('materialExistente'),selecionado=seletor.value;
+ const lista=lerMateriais();
+ seletor.replaceChildren();
+ const vazio=document.createElement('option');vazio.value='';vazio.textContent='Selecione um material';seletor.appendChild(vazio);
+ for(const material of lista){
+  const opcao=document.createElement('option');opcao.value=material.id;
+  opcao.textContent=material.titulo+' — '+(material.disciplina||'Sem disciplina');
+  seletor.appendChild(opcao);
+ }
+ if(lista.some(m=>m.id===selecionado))seletor.value=selecionado;
+}
+$('atualizarMateriais').addEventListener('click',atualizarMateriais);
+$('usarMaterial').addEventListener('click',()=>{
+ const material=lerMateriais().find(m=>m.id===$('materialExistente').value);
+ if(!material)return aviso('Escolha um rascunho válido.');
+ $('vinculoTitulo').value=material.titulo.slice(0,100);
+ $('vinculoTexto').value=material.conteudo.slice(0,1200);
+ const conteudoCortado=material.conteudo.length>1200;
+ const link=typeof material.link==='string'?material.link.trim():'';
+ $('vinculoLink').value=linkSeguro(link)||'';
+ aviso(conteudoCortado?'Atenção: o resumo aceita até 1.200 caracteres. O conteúdo foi reduzido; revise antes de salvar.':'Aula preenchida. Confira os dados e clique em Adicionar aula ao módulo.');
+});
+atualizarMateriais();
+$('formAulaCurso').addEventListener('submit',e=>{
+ e.preventDefault();const c=dados.cursos.find(x=>x.id===$('vinculoCurso').value),m=c?.modulos?.find(x=>x.id===$('vinculoModulo').value);if(!m)return aviso('Crie um curso e um módulo antes.');
+ const link=$('vinculoLink').value.trim();if(link&&!linkSeguro(link))return aviso('Informe um link HTTPS válido.');
+ m.aulas=Array.isArray(m.aulas)?m.aulas:[];m.aulas.push({id:id(),titulo:$('vinculoTitulo').value.trim(),texto:$('vinculoTexto').value.trim(),link:linkSeguro(link)});
+ e.target.reset();salvar();aviso('Aula adicionada ao módulo!');
+});
+function renderizarCursos(){
+ fecharCurso();const filtro=$('filtroCurso').value,termo=$('buscaCurso').value.trim().toLocaleLowerCase('pt-BR');
+ const cursos=dados.cursos.filter(c=>(!filtro||c.etapa===filtro)&&[c.titulo,c.professor,c.disciplina].join(' ').toLocaleLowerCase('pt-BR').includes(termo));
+ $('catalogo').innerHTML=cursos.map(c=>`<article class="cartao curso-card"><span class="pill">${escapar(c.etapa)}</span><h3 style="margin-top:12px">${escapar(c.titulo)}</h3><p>${escapar(c.descricao)}</p><div class="curso-meta"><span>📖 ${escapar(c.disciplina)}</span><span>⏱ ${Number(c.carga)||0}h</span><span>📑 ${(c.modulos||[]).length} módulos</span></div><p class="resumo">Professor: ${escapar(c.professor)}</p><div class="curso-preco">${c.modalidade==='pago'?moeda(c.preco)+' · futuro':'Gratuito'}</div><button type="button" onclick="mostrarCurso('${c.id}')">Ver detalhes</button></article>`).join('')||'<p class="vazio">Nenhum curso encontrado. Cadastre um na área do professor.</p>';
+ const cursoAtual=$('vinculoCurso').value;$('vinculoCurso').innerHTML=dados.cursos.map(c=>`<option value="${escapar(c.id)}" ${c.id===cursoAtual?'selected':''}>${escapar(c.titulo)}</option>`).join('');atualizarModulosCurso();
+ $('cursosProfessor').innerHTML='<h4>Cursos cadastrados ('+dados.cursos.length+')</h4>'+dados.cursos.map(c=>`<div class="pergunta"><b>${escapar(c.titulo)}</b><p class="resumo">${escapar(c.professor)} · ${escapar(c.etapa)} · ${c.modalidade==='pago'?'Pago futuramente':'Gratuito'}</p><small>Módulos: ${(c.modulos||[]).map(m=>escapar(m.titulo)).join(', ')||'Nenhum'}</small><div class="acoes"><button type="button" class="secundario" onclick="adicionarModulo('${c.id}')">+ Módulo</button><button type="button" class="perigo" onclick="excluirCurso('${c.id}')">Excluir</button></div></div>`).join('');
+}
+$('filtroCurso').addEventListener('change',renderizarCursos);
+$('buscaCurso').addEventListener('input',renderizarCursos);
+
+// Aulas ao vivo: links externos, sem vídeo armazenado no Portal.
+$('formEncontro').addEventListener('submit',e=>{
+ e.preventDefault();
+ const turma=$('encontroTurma').value,link=linkSeguro($('encontroLink').value.trim()),gravacaoTexto=$('encontroGravacao').value.trim();
+ if(!dados.turmas.some(t=>t.id===turma))return aviso('Crie uma turma primeiro.');
+ if(!link)return aviso('Confira o link da aula. Ele deve começar com https://');
+ if(gravacaoTexto&&!linkSeguro(gravacaoTexto))return aviso('Confira o link da gravação.');
+ const dia=$('encontroData').value;
+ if(!dia||!Number.isFinite(new Date(dia).getTime()))return aviso('Escolha o dia e o horário.');
+ dados.encontros.push({id:id(),turma,titulo:$('encontroTitulo').value.trim().slice(0,100),servico:$('encontroServico').value,dia,link,gravacao:linkSeguro(gravacaoTexto)});
+ e.target.reset();salvar();aviso('Aula salva!');
+});
+function excluirEncontro(eid){if(!confirm('Deseja excluir esta aula da lista?'))return;dados.encontros=dados.encontros.filter(e=>e.id!==eid);salvar();aviso('Aula excluída.');}
+function gravarEncontro(eid){const e=dados.encontros.find(x=>x.id===eid);if(!e)return;const texto=prompt('Cole o link HTTPS da gravação:',e.gravacao||'');if(texto===null)return;if(texto.trim()&&!linkSeguro(texto.trim()))return aviso('Informe um link HTTPS válido.');e.gravacao=linkSeguro(texto.trim());salvar();aviso('Gravação atualizada!');}
+function cartaoEncontro(e,professor){
+ const turma=dados.turmas.find(t=>t.id===e.turma)?.nome||'Turma';
+ const dia=new Date(e.dia).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});
+ return `<article class="pergunta aula-online"><span class="pill">${escapar(turma)}</span><h4>${escapar(e.titulo)}</h4><p>📅 ${escapar(dia)} · ${escapar(e.servico)}</p><a href="${escapar(e.link)}" target="_blank" rel="noopener noreferrer">Entrar na aula ↗</a>${e.gravacao?`<a href="${escapar(e.gravacao)}" target="_blank" rel="noopener noreferrer">Assistir à gravação ↗</a>`:'<p class="resumo">Gravação ainda não disponível.</p>'}${professor?`<div class="acoes"><button type="button" class="secundario" onclick="gravarEncontro('${e.id}')">Colocar gravação</button><button type="button" class="perigo" onclick="excluirEncontro('${e.id}')">Excluir aula</button></div>`:''}</article>`;
+}
+function renderizarEncontros(){
+ const lista=[...dados.encontros].sort((a,b)=>a.dia.localeCompare(b.dia));
+ $('encontrosProfessor').innerHTML=lista.map(e=>cartaoEncontro(e,true)).join('')||'<p class="vazio">Nenhuma aula marcada ainda.</p>';
+ const minhas=lista.filter(e=>dados.matriculas.some(m=>m.aluno===alunoSelecionado&&m.turma===e.turma));
+ $('encontrosAluno').innerHTML=minhas.map(e=>cartaoEncontro(e,false)).join('')||'<p class="vazio">Nenhuma aula marcada para suas turmas.</p>';
+}
+function renderizar(){
+const selecionadoAnterior=$('alunoAtivo').value||alunoSelecionado;alunoSelecionado=dados.alunos.includes(selecionadoAnterior)?selecionadoAnterior:dados.alunos[0];$('alunoAtivo').innerHTML=dados.alunos.map(a=>`<option value="${escapar(a)}" ${a===alunoSelecionado?'selected':''}>${escapar(a)}</option>`).join('');
+const op=dados.turmas.map(t=>`<option value="${escapar(t.id)}">${escapar(t.nome)}</option>`).join('');$('atividadeTurma').innerHTML=op;$('notaTurma').innerHTML=op;$('matriculaTurma').innerHTML=op;$('simuladoTurma').innerHTML=op;$('aulaTurma').innerHTML=op;$('encontroTurma').innerHTML=op;$('nomeAluno').innerHTML=dados.alunos.map(a=>`<option value="${escapar(a)}">${escapar(a)}</option>`).join('');$('listaMatriculas').innerHTML='<p class="resumo">'+dados.matriculas.map(m=>escapar(m.aluno)+' — '+escapar(dados.turmas.find(t=>t.id===m.turma)?.nome||'Turma')).join('<br>')+'</p>';
+$('listaTurmas').innerHTML=dados.turmas.map(t=>`<div class="cartao"><h3>${escapar(t.nome)}</h3><span class="pill">${escapar(t.etapa)}</span><p class="muted">${dados.atividades.filter(a=>a.turma===t.id).length} atividade(s)</p></div>`).join('')||'<p class="vazio">Nenhuma turma criada.</p>';
+$('aulasProfessor').innerHTML='<h4>Aulas publicadas ('+dados.aulas.length+')</h4>'+dados.aulas.map(a=>`<div class="pergunta"><b>${escapar(a.modulo)} — ${escapar(a.titulo)}</b><p class="muted">${escapar(dados.turmas.find(t=>t.id===a.turma)?.nome||'Turma')}</p><div class="acoes"><button class="secundario" type="button" onclick="editarAula('${a.id}')">Editar</button><button class="perigo" type="button" onclick="excluirAula('${a.id}')">Excluir</button></div></div>`).join('');
+renderizarBiblioteca();
+renderizarEncontros();
+renderizarRelatorio();
+renderizarCursos();
+$('listaBanco').innerHTML='<p class="resumo">'+dados.atividades.length+' questão(ões) no banco · '+dados.simulados.length+' simulado(s) criado(s).</p>';
+$('listaAtividades').innerHTML=dados.atividades.filter(a=>dados.matriculas.some(m=>m.aluno===alunoSelecionado&&m.turma===a.turma)).map(a=>{
+ const turma=dados.turmas.find(t=>t.id===a.turma),feita=dados.tentativas.find(t=>t.aluno===alunoSelecionado&&t.atividade===a.id);
+ const ns=dados.notas.filter(n=>n.aluno===alunoSelecionado&&n.turma===a.turma&&n.origem!=='Recuperação');
+ const mediaAtual=ns.length?ns.reduce((v,n)=>v+n.valor,0)/ns.length:null;
+ const recuperacao=a.tipo==='recuperacao',liberada=!recuperacao||(mediaAtual!==null&&mediaAtual<Number($('mediaMinima').value));
+ if(!liberada)return '';
+ return `<div class="pergunta"><strong>${escapar(a.pergunta)}</strong><p class="muted">${escapar(turma?.nome||'Turma')} · ${escapar(a.disciplina||'Geral')} · ${recuperacao?'Recuperação':'Atividade'}</p>${feita?`<span class="pill">Respondida · ${feita.acertou?'Acertou':'Errou'}</span>`:a.alternativas.map((alt,i)=>`<label><input type="radio" name="resposta_${a.id}" value="${i}"> ${'ABC'[i]}) ${escapar(alt)}</label>`).join('')+`<button onclick="responder('${a.id}')">Enviar resposta</button>`}</div>`;
+}).join('')||'<p class="vazio">Nenhuma atividade disponível no momento.</p>';
+$('listaSimulados').innerHTML=dados.simulados.filter(s=>dados.matriculas.some(m=>m.aluno===alunoSelecionado&&m.turma===s.turma)).map(s=>{
+ const feita=dados.tentativas.find(t=>t.aluno===alunoSelecionado&&t.simulado===s.id);
+ const questoes=s.questoes.map(q=>dados.atividades.find(a=>a.id===q)).filter(Boolean);
+ return `<div class="pergunta"><h3>${escapar(s.titulo)}</h3><p class="resumo">${questoes.length} questões</p>${feita?`<span class="pill">Concluído: ${feita.acertos}/${feita.total} acertos</span>`:questoes.map((q,i)=>`<fieldset style="border:1px solid #dce3ed;border-radius:10px;margin:12px 0"><legend>${i+1}. ${escapar(q.pergunta)}</legend>${q.alternativas.map((alt,j)=>`<label><input type="radio" name="sim_${s.id}_${q.id}" value="${j}"> ${'ABC'[j]}) ${escapar(alt)}</label>`).join('')}</fieldset>`).join('')+`<button onclick="responderSimulado('${s.id}')">Concluir simulado</button>`}</div>`;
+}).join('')||'<p class="vazio">Nenhum simulado disponível.</p>';
+const notasAluno=dados.notas.filter(n=>n.aluno===alunoSelecionado);const media=notasAluno.length?notasAluno.reduce((s,n)=>s+n.valor,0)/notasAluno.length:null;
+const minimo=Math.max(0,Math.min(10,Number($('mediaMinima').value)||7));
+const matriculasAluno=dados.matriculas.filter(m=>m.aluno===alunoSelecionado);
+$('progressoAluno').innerHTML=matriculasAluno.map(m=>{const turma=dados.turmas.find(t=>t.id===m.turma);const ns=notasAluno.filter(n=>n.turma===m.turma);const mediaTurma=ns.length?ns.reduce((total,n)=>total+n.valor,0)/ns.length:null;const pct=mediaTurma===null?0:mediaTurma*10;return `<div class="pergunta"><strong>${escapar(turma?.nome||'Turma')}</strong><p>Média: <b>${mediaTurma===null?'Sem notas':mediaTurma.toFixed(1)}</b> · ${mediaTurma===null?'Aguardando avaliação':mediaTurma>=minimo?'Média alcançada':'Recuperação recomendada'}</p><div class="barra"><div class="progresso" style="width:${pct}%"></div></div><small>${ns.length} avaliação(ões) · Meta ${minimo.toFixed(1)}</small></div>`}).join('')||'<p class="vazio">Aluno sem matrículas.</p>';
+$('boletim').innerHTML=`<p>Média geral demonstrativa: <strong>${media===null?'Sem notas':media.toFixed(1)}</strong></p><div class="tabela"><table><thead><tr><th>Turma</th><th>Nota</th><th>Origem</th></tr></thead><tbody>${notasAluno.map(n=>`<tr><td>${escapar(dados.turmas.find(t=>t.id===n.turma)?.nome||'Turma')}</td><td>${n.valor.toFixed(1)}</td><td>${escapar(n.origem)}</td></tr>`).join('')||'<tr><td colspan="3">Nenhuma nota</td></tr>'}</tbody></table></div><small>Médias por turma calculadas com pesos iguais. Recuperação aparece como nota independente; substituição formal de médias e pesos personalizados virão depois.</small>`;
+$('totalTurmas').textContent=dados.turmas.length;$('totalAtividades').textContent=dados.atividades.length;$('totalNotas').textContent=dados.notas.length;
+$('historico').innerHTML=dados.notas.slice().reverse().map(n=>`<p><strong>${escapar(n.aluno)}</strong> — ${n.valor.toFixed(1)} (${escapar(n.origem)})<br><small>${escapar(n.data)}</small> <button class="secundario" type="button" onclick="editarNota('${n.id}')">Editar nota</button>${(n.alteracoes||[]).length?'<br><small>Alterações: '+n.alteracoes.map(a=>a.anterior+' → '+a.novo+' ('+escapar(a.data)+')').join('; ')+'</small>':''}</p>`).join('')||'<p class="vazio">Sem notas registradas.</p>';
+}
+function comissao(){const p=Math.max(0,Number($('preco').value)||0);$('profRecebe').textContent=moeda(p*.7);$('portalRecebe').textContent=moeda(p*.3)}$('preco').addEventListener('input',comissao);$('alunoAtivo').addEventListener('change',e=>{alunoSelecionado=e.target.value;renderizar()});$('mediaMinima').addEventListener('input',renderizar);
+const etapas=[['📘','Fundamental I'],['📗','Fundamental II'],['🎓','Ensino Médio'],['📝','ENEM'],['🏛️','Vestibulares'],['⚖️','Concursos'],['💻','Tecnologia'],['🌎','Cursos livres'],['🧩','Pedagogia'],['♿','Educação Inclusiva']];montarAtalhos();renderizar();comissao();
+
+const estudosLivres = [{"id": "e1", "etapa": "Fundamental I", "disciplina": "Matemática", "titulo": "Frações no dia a dia", "texto": "Uma fração representa partes iguais de um todo. Se uma pizza foi dividida em 4 partes iguais e você pegou 1, pegou 1/4 da pizza.", "pergunta": "Uma pizza tem 4 fatias iguais. Duas fatias representam qual fração?", "resposta": "2/4 (ou 1/2)"}, {"id": "e2", "etapa": "Fundamental I", "disciplina": "Língua Portuguesa", "titulo": "Substantivos", "texto": "Substantivos são palavras usadas para nomear pessoas, lugares, objetos, sentimentos e ideias. Exemplos: escola, livro e alegria.", "pergunta": "Na frase 'A menina abriu o livro', quais são os substantivos?", "resposta": "menina e livro"}, {"id": "e3", "etapa": "Fundamental II", "disciplina": "História", "titulo": "Fontes históricas", "texto": "Fontes históricas são vestígios usados para investigar o passado, como cartas, fotografias, objetos e relatos. É importante considerar quem produziu a fonte e em qual contexto.", "pergunta": "Uma fotografia antiga pode ser fonte histórica?", "resposta": "Sim. Ela pode ajudar a investigar um período, mas precisa ser analisada em seu contexto."}, {"id": "e4", "etapa": "Fundamental II", "disciplina": "Ciências", "titulo": "Cadeias alimentares", "texto": "Uma cadeia alimentar representa relações de alimentação entre seres vivos. Produtores, como plantas, utilizam energia solar para produzir matéria orgânica.", "pergunta": "Em uma cadeia capim → gafanhoto → sapo, qual é o produtor?", "resposta": "O capim."}, {"id": "e5", "etapa": "Ensino Médio", "disciplina": "Matemática", "titulo": "Função do primeiro grau", "texto": "Uma função do primeiro grau pode ser escrita como f(x) = ax + b, com a diferente de zero. Seu gráfico é uma reta.", "pergunta": "Se f(x) = 2x + 3, qual é f(4)?", "resposta": "11."}, {"id": "e6", "etapa": "Ensino Médio", "disciplina": "Biologia", "titulo": "Células e DNA", "texto": "O DNA armazena informações genéticas. Em células eucarióticas, grande parte do DNA fica no núcleo, embora também exista DNA em algumas organelas.", "pergunta": "Qual é uma função do DNA?", "resposta": "Armazenar informações genéticas."}, {"id": "e7", "etapa": "ENEM", "disciplina": "Redação", "titulo": "Tese e argumentação", "texto": "Em um texto dissertativo-argumentativo, a tese expressa o posicionamento central sobre o tema. Os argumentos devem sustentar esse posicionamento com explicações e evidências.", "pergunta": "Qual é a diferença entre tese e argumento?", "resposta": "A tese é o posicionamento; o argumento é uma razão que o sustenta."}, {"id": "e8", "etapa": "ENEM", "disciplina": "História", "titulo": "Revolução Industrial", "texto": "A Revolução Industrial transformou as formas de produção, com expansão das fábricas e do trabalho assalariado. Também intensificou a urbanização e os conflitos sociais.", "pergunta": "Cite uma transformação social ligada à industrialização.", "resposta": "Crescimento das cidades ou expansão do trabalho fabril assalariado."}, {"id": "e9", "etapa": "Tecnologia", "disciplina": "Programação", "titulo": "Primeiros passos com HTML", "texto": "HTML organiza a estrutura de uma página. Títulos podem usar a tag h1 e parágrafos podem usar a tag p. CSS cuida da aparência e JavaScript pode adicionar interações.", "pergunta": "HTML é usado principalmente para estrutura, aparência ou interação?", "resposta": "Estrutura."}, {"id": "e10", "etapa": "Pedagogia", "disciplina": "Didática", "titulo": "Objetivos de aprendizagem", "texto": "Um objetivo de aprendizagem descreve o que se espera que o estudante consiga fazer após uma atividade. Deve ser claro e observável.", "pergunta": "Qual objetivo é mais verificável: 'entender frações' ou 'comparar duas frações simples'?", "resposta": "Comparar duas frações simples."}, {"id": "e11", "etapa": "Educação Inclusiva", "disciplina": "Acessibilidade", "titulo": "Materiais acessíveis", "texto": "Materiais acessíveis podem usar títulos organizados, linguagem clara, texto alternativo em imagens e legendas em vídeos. As adaptações devem considerar necessidades individuais.", "pergunta": "Por que vídeos com fala devem ter legendas?", "resposta": "Para ampliar o acesso ao conteúdo, inclusive para pessoas com deficiência auditiva."}];
+const chaveProgressoEstudos='portalSaberProgressoDemoV22';
+let progressoEstudos=new Set();
+try {const salvo=JSON.parse(localStorage.getItem(chaveProgressoEstudos)||'[]');if(Array.isArray(salvo)) progressoEstudos=new Set(salvo.filter(id=>estudosLivres.some(e=>e.id===id)));}catch{progressoEstudos=new Set();}
+function guardarProgresso(){try{localStorage.setItem(chaveProgressoEstudos,JSON.stringify([...progressoEstudos]));}catch{}}
+function marcarEstudo(id){if(!estudosLivres.some(e=>e.id===id))return;if(progressoEstudos.has(id))progressoEstudos.delete(id);else progressoEstudos.add(id);guardarProgresso();renderizarEstudos();$('listaEstudos').hidden=false;}
+$('filtroEstudos').addEventListener('change',()=>{$('listaEstudos').hidden=false;renderizarEstudos();});
+$('limparEstudos').addEventListener('click',()=>{if(!confirm('Apagar as marcações de estudo desta demonstração?'))return;progressoEstudos.clear();guardarProgresso();renderizarEstudos();$('listaEstudos').hidden=false;});
+function renderizarEstudos(){
+ const etapa=$('etapaEstudo').value, termo=$('buscaEstudo').value.trim().toLocaleLowerCase('pt-BR');
+ const filtro=$('filtroEstudos').value;
+ const encontrados=estudosLivres.filter(e=>(!etapa||e.etapa===etapa)&&[e.disciplina,e.titulo,e.texto].join(' ').toLocaleLowerCase('pt-BR').includes(termo)&&(filtro==='todos'||(filtro==='concluidos'?progressoEstudos.has(e.id):!progressoEstudos.has(e.id))));
+ $('totalEstudos').textContent=encontrados.length+' material(is) encontrado(s).';
+ $('progressoEstudos').textContent='Meu progresso neste navegador: '+progressoEstudos.size+' de '+estudosLivres.length+' materiais estudados.';
+ $('listaEstudos').innerHTML=encontrados.map(e=>`<article class="cartao"><span class="pill">${escapar(e.etapa)}</span><h3>${escapar(e.titulo)}</h3><p>${escapar(e.disciplina)}</p><p>${progressoEstudos.has(e.id)?"✓ Estudado":"Pendente"}</p><button type="button" onclick="abrirEstudo('${e.id}')">Ler e praticar</button></article>`).join('')||'<p>Nenhum material encontrado.</p>';
+ $('leituraEstudo').hidden=true;
+}
+function abrirEstudo(identificador){
+ const e=estudosLivres.find(item=>item.id===identificador);if(!e)return;
+ const q=questoesObjetivas[e.id];const marcada=respostasEstudo[e.id];
+ const formulario=q?`<fieldset><legend>Escolha uma resposta</legend>${q.opcoes.map((op,i)=>`<label style="display:block;margin:10px 0"><input type="radio" name="questaoEstudo" value="${i}" ${marcada===i?'checked':''}> ${escapar(op)}</label>`).join('')}</fieldset><button type="button" onclick="responderEstudo('${e.id}')">Corrigir resposta</button><p id="resultadoQuestao" role="status" aria-live="polite"></p>`:'';
+ $('leituraEstudo').innerHTML=`<h3>${escapar(e.titulo)}</h3><p>${escapar(e.texto)}</p><h4>Para praticar</h4><p>${escapar(e.pergunta)}</p>${formulario}<details><summary>Ver explicação</summary><p>${escapar(e.resposta)}</p></details><button type="button" onclick="marcarEstudo('${e.id}')">${progressoEstudos.has(e.id)?'Marcar como não estudado':'Marcar como estudado'}</button><button type="button" class="secundario" onclick="fecharEstudo()">Voltar aos materiais</button>`;
+ $('listaEstudos').hidden=true;$('leituraEstudo').hidden=false;$('leituraEstudo').focus();$('leituraEstudo').scrollIntoView({block:'start'});
+}
+function fecharEstudo(){$('leituraEstudo').hidden=true;$('listaEstudos').hidden=false;}
+$('etapaEstudo').addEventListener('change',()=>{ $('listaEstudos').hidden=false;renderizarEstudos();});
+$('buscaEstudo').addEventListener('input',()=>{ $('listaEstudos').hidden=false;renderizarEstudos();});
+
+const questoesObjetivas = {"e1": {"opcoes": ["1/4", "2/4", "3/4"], "correta": 1}, "e2": {"opcoes": ["menina e livro", "abriu e livro", "a e menina"], "correta": 0}, "e3": {"opcoes": ["Sim, quando analisada no contexto", "Não, somente documentos escritos", "Não, porque não é texto"], "correta": 0}, "e4": {"opcoes": ["O sapo", "O gafanhoto", "O capim"], "correta": 2}, "e5": {"opcoes": ["8", "11", "14"], "correta": 1}, "e6": {"opcoes": ["Armazenar informações genéticas", "Produzir luz solar", "Transportar oxigênio no sangue"], "correta": 0}, "e7": {"opcoes": ["A tese é o posicionamento e o argumento o sustenta", "Tese e argumento são iguais", "Argumento é o título"], "correta": 0}, "e8": {"opcoes": ["Urbanização e trabalho fabril", "Fim das cidades", "Desaparecimento das fábricas"], "correta": 0}, "e9": {"opcoes": ["Estrutura", "Aparência", "Hospedagem"], "correta": 0}, "e10": {"opcoes": ["Entender tudo", "Comparar duas frações simples", "Gostar de matemática"], "correta": 1}, "e11": {"opcoes": ["Para ampliar o acesso à informação", "Para substituir todas as adaptações", "Para impedir áudio"], "correta": 0}};
+const chaveRespostas = 'portalSaberRespostasDemoV23';
+let respostasEstudo = {};
+try {const guardadas=JSON.parse(localStorage.getItem(chaveRespostas)||'{}'); if(guardadas&&typeof guardadas==='object'&&!Array.isArray(guardadas)) respostasEstudo=Object.fromEntries(Object.entries(guardadas).filter(([id,valor])=>Object.hasOwn(questoesObjetivas,id)&&Number.isInteger(valor)&&valor>=0&&valor<3));}catch{respostasEstudo={};}
+function salvarRespostas(){try{localStorage.setItem(chaveRespostas,JSON.stringify(respostasEstudo));}catch{}}
+function responderEstudo(id){
+ const selecionada=document.querySelector('input[name="questaoEstudo"]:checked');
+ const saida=$('resultadoQuestao');
+ if(!selecionada){saida.textContent='Selecione uma resposta antes de corrigir.';return;}
+ const resposta=Number(selecionada.value), questao=questoesObjetivas[id];
+ if(!questao||!Number.isInteger(resposta)||resposta<0||resposta>=questao.opcoes.length)return;
+ respostasEstudo[id]=resposta;salvarRespostas();
+ const correta=resposta===questao.correta;
+ saida.textContent=(correta?'Resposta correta! ':'Vamos revisar. ')+ 'Resposta esperada: '+questao.opcoes[questao.correta]+'.';
+ atualizarResumoExercicios();
+}
+function atualizarResumoExercicios(){
+ const ids=Object.keys(respostasEstudo).filter(id=>Object.hasOwn(questoesObjetivas,id));
+ const acertos=ids.filter(id=>respostasEstudo[id]===questoesObjetivas[id].correta).length;
+ $('resumoExercicios').textContent='Exercícios respondidos neste navegador: '+ids.length+' de '+Object.keys(questoesObjetivas).length+'. Acertos: '+acertos+'. Para revisar: '+(ids.length-acertos)+'.';
+}
+$('limparExercicios').addEventListener('click',()=>{
+ if(!confirm('Apagar apenas as respostas dos exercícios desta demonstração?'))return;
+ respostasEstudo={};salvarRespostas();atualizarResumoExercicios();
+ if(!$('leituraEstudo').hidden){$('leituraEstudo').hidden=true;$('listaEstudos').hidden=false;}
+});
+
+renderizarEstudos();atualizarResumoExercicios();
+</script>
+</body>
+</html>

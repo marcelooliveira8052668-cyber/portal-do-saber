@@ -1,0 +1,43 @@
+/* Portal do Saber — identidade visual futurista discreta.
+   CSS compartilhado: melhora o visual sem alterar funcionalidades. */
+:root{--azul:#112b4e;--claro:#f3f7fc;--verde:#087f89;--texto:#172b44;--borda:#dbe6f1;--brilho:#13b5bd;--superficie:#fff;--sombra:0 10px 30px rgba(19,47,84,.07)}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse 85% 350px at 85% -50px,rgba(43,174,195,.12),transparent 70%),linear-gradient(180deg,#f7faff,#eff5fa 65%,#f7faff);color:var(--texto);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.55}
+header{background:linear-gradient(112deg,#0b203d 0%,#123b61 72%,#0e5268 100%);border-bottom:1px solid rgba(255,255,255,.12);color:#fff;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;right:-80px;top:-140px;width:350px;height:350px;border:1px solid rgba(102,229,232,.16);border-radius:50%;pointer-events:none;box-shadow:0 0 0 65px rgba(102,229,232,.035),0 0 0 130px rgba(102,229,232,.025)}
+header h1{font-weight:800;letter-spacing:-.035em;position:relative;z-index:1}
+header p{color:#d1e7f3;position:relative;z-index:1}
+nav{background:rgba(255,255,255,.96);border-bottom:1px solid var(--borda);box-shadow:0 3px 14px rgba(16,47,76,.04);gap:7px;scrollbar-width:thin}
+nav button{background:transparent;color:#2b4c69;border:1px solid transparent;border-radius:10px;transition:background .18s,color .18s,border-color .18s}
+nav button:hover{background:#eaf3f9;border-color:#d7e8f2}
+nav button.ativo{background:#123d60;color:#fff;box-shadow:0 3px 12px rgba(17,59,96,.14)}
+main{max-width:1080px}
+.hero{background:linear-gradient(125deg,#0c2948,#11556b 90%);border:1px solid rgba(107,223,229,.2);border-radius:20px;box-shadow:0 15px 32px rgba(13,48,79,.14);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;width:230px;height:230px;right:-90px;top:-100px;border:1px solid rgba(134,240,237,.22);border-radius:50%;pointer-events:none}
+.hero h2{letter-spacing:-.025em}
+.cartao,article.card,.card{background:var(--superficie);border:1px solid var(--borda);border-radius:16px;box-shadow:var(--sombra)}
+.cartao{transition:border-color .18s,box-shadow .18s}
+.cartao:hover{border-color:#b9d7e5;box-shadow:0 12px 30px rgba(19,47,84,.1)}
+.cartao h3,h2,h3{letter-spacing:-.02em}
+button,.botao{background:#123d60;color:white;border-radius:10px;transition:background .18s,transform .18s,box-shadow .18s}
+button:hover:not(:disabled),.botao:hover{background:#17617b;box-shadow:0 4px 13px rgba(17,72,106,.16)}
+button:active:not(:disabled){transform:translateY(1px)}
+button.secundario,.secundario{background:#e8f1f7;color:#183f5b}
+button.secundario:hover:not(:disabled){background:#d5e9f3}
+button.perigo,.perigo{background:#9c3044;color:#fff}
+input,select,textarea{border:1px solid #bdcedd;border-radius:10px;background:#fff;color:#172b44;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:2px solid transparent;border-color:#128b99;box-shadow:0 0 0 3px rgba(18,139,153,.17)}
+:where(button,a,input,select,textarea,[tabindex]):focus-visible{outline:3px solid #00a9b5;outline-offset:3px}
+a{color:#0b6279;text-underline-offset:3px}
+a:hover{color:#084c67}
+.pill,.etiqueta,.status{background:#e5f6f7;color:#12606a;border:1px solid #c7e9eb}
+.progresso,.barra-modulo>span{background:linear-gradient(90deg,#0c8a93,#2bb6b3)}
+.destaque{border-left-color:#0b909a}
+.pergunta{background:#f3f8fc;border:1px solid #e1ebf4}
+th{background:#edf4fa;color:#183f5b}
+td,th{border-bottom-color:#e1eaf3}
+.notificacao{background:#10334e;box-shadow:0 14px 40px rgba(8,31,53,.22)}
+footer{color:#52677e}
+@media(max-width:640px){header{padding:18px 15px}.hero{padding:20px;border-radius:16px}main{padding:13px}.cartao{padding:15px}nav{padding:9px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+@media print{body{background:#fff!important}header,.hero{box-shadow:none!important}nav{position:static}button{box-shadow:none!important}.cartao{box-shadow:none!important}}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal do Saber | Minha conta</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#17243a;background:#f4f7fb}*{box-sizing:border-box}
+main{max-width:470px;margin:5vh auto;padding:24px;background:white;border-radius:16px;box-shadow:0 4px 22px #132a4214}
+h1{font-size:1.5rem}label{display:block;margin:14px 0 5px;font-weight:600}
+input,select,button{width:100%;padding:12px;border-radius:8px;font:inherit}
+input,select{border:1px solid #69788b}button{margin-top:15px;border:0;background:#1654b5;color:white;cursor:pointer}
+button:disabled{opacity:.6}nav{display:flex;gap:8px}nav button{flex:1}p{line-height:1.5}#mensagem{min-height:30px}small{color:#4a596a}
+</style><link rel="stylesheet" href="tema-futurista.css">
+</head><body><main>
+<h1>Portal do Saber</h1><p>Cadastro e acesso à conta</p>
+<p><strong>Atenção:</strong> esta tela só funcionará após configurar um serviço de autenticação e revisar as regras de segurança.</p>
+<nav><button id="tabEntrar" type="button">Entrar</button><button id="tabCriar" type="button">Criar conta</button></nav>
+<form id="formConta">
+<div id="nomeCampo" hidden><label for="nome">Nome</label><input id="nome" maxlength="120" autocomplete="name"></div>
+<div id="perfilCampo" hidden><label for="perfil">Eu sou</label><select id="perfil"><option value="aluno">Aluno</option><option value="professor">Professor</option><option value="responsavel">Responsável</option></select></div>
+<label for="email">E-mail</label><input id="email" type="email" required autocomplete="email">
+<label for="senha">Senha</label><input id="senha" type="password" required minlength="12" autocomplete="current-password">
+<button id="enviar" type="submit">Entrar</button>
+</form>
+<button id="recuperar" type="button">Esqueci minha senha</button>
+<button id="sair" type="button" hidden>Sair</button>
+<p id="mensagem" role="status" aria-live="polite"></p>
+<small>Não use dados de estudantes reais nesta demonstração. Contas de menores exigem fluxo de consentimento e proteção específico antes do lançamento.</small>
+</main><script type="module" src="./conta.js"></script></body></html>
